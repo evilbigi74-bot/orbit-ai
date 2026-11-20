@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050a11"><meta name="description" content="Orbit AI — Think, Create, Explore">
+  <title>Orbit AI v4.3</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="fluid" aria-hidden="true"></canvas><div class="vignette"></div><div class="grain"></div>
+  <aside class="rail" id="rail" aria-label="Main navigation">
+    <button class="brand-mark" title="Orbit AI home"><span class="brand-glyph">O</span></button>
+    <nav class="rail-nav">
+      <button class="rail-btn active" data-nav="Home" aria-label="Home"><i data-icon="home"></i><span class="tip">Home</span></button>
+      <button class="rail-btn" data-nav="Search" aria-label="Search"><i data-icon="search"></i><span class="tip">Search</span></button>
+      <button class="rail-btn" data-nav="Explore" aria-label="Explore"><i data-icon="compass"></i><span class="tip">Explore</span></button>
+      <button class="rail-btn" data-nav="Tools" aria-label="Tools"><i data-icon="grid"></i><span class="tip">Tools</span></button>
+      <button class="rail-btn" data-nav="Settings" aria-label="Settings"><i data-icon="settings"></i><span class="tip">Settings</span></button>
+      <button class="rail-btn" data-nav="More" aria-label="More"><i data-icon="more"></i><span class="tip">More</span></button>
+    </nav>
+    <button class="avatar" title="Your profile">A</button>
+  </aside>
+  <aside class="history glass" id="history">
+    <div class="history-head"><div class="mini-brand"><span class="brand-glyph small">O</span><span>ORBIT <b>AI</b></span></div><button class="icon-btn mobile-close" id="closeHistory" aria-label="Close history"><i data-icon="close"></i></button></div>
+    <button class="new-chat" id="newChat"><i data-icon="plus"></i> New chat <kbd>⌘ N</kbd></button>
+    <label class="search-box"><i data-icon="search"></i><input id="searchChats" placeholder="Search conversations" autocomplete="off"><kbd>/</kbd></label>
+    <div class="history-label"><span>Recent chats</span><button class="icon-btn filter-btn" id="filterChats" title="Filter chats"><i data-icon="filter"></i></button></div>
+    <div class="chat-list" id="chatList"></div>
+    <div class="history-bottom"><button id="clearHistory" class="clear-btn"><i data-icon="trash"></i> Clear history</button><div class="demo-note"><span class="tiny-dot"></span> Demo mode <span class="demo-help" title="Connect a backend by setting window.ORBIT_API_URL in app.js">ⓘ</span></div></div>
+  </aside>
+  <main class="stage" id="stage">
+    <header class="topbar"><button class="icon-btn menu-toggle" id="openHistory" aria-label="Open conversations"><i data-icon="menu"></i></button><div class="top-spacer"></div>
+      <div class="status-pill glass"><span class="online-dot"></span><span>Online</span><span class="status-divider"></span><span class="tokens"><i data-icon="sparkle"></i><b id="tokenCount">0</b> tokens</span><button class="icon-btn" id="themeToggle" title="Switch to light mode" aria-label="Switch to light mode" aria-pressed="false"><i data-icon="sun"></i></button><button class="icon-btn settings-shortcut" id="openSettings" title="Settings" aria-label="Open settings"><i data-icon="settings"></i></button><button class="icon-btn" id="fullscreen" title="Toggle fullscreen"><i data-icon="expand"></i></button></div>
+    </header>
+    <section class="hero" id="hero"><div class="orb-wrap"><canvas id="orb"></canvas><div class="orb-halo"></div><div class="orb-platform"><span></span><span></span></div></div>
+      <div class="hero-copy"><div class="eyebrow"><span></span> YOUR INTELLIGENCE, AMPLIFIED</div><h1>ORBIT <em>AI</em></h1><div class="version">v4.3</div><p>Think <b>·</b> Create <b>·</b> Explore</p></div>
+      <div class="suggestions"><button data-prompt="Help me brainstorm something creative">✳ <span>Brainstorm ideas</span></button><button data-prompt="Explain a complex topic simply">◈ <span>Learn something</span></button><button data-prompt="Help me write a thoughtful message">↗ <span>Write with me</span></button></div>
+    </section>
+    <section class="conversation hidden" id="conversation"><div class="messages" id="messages"></div></section>
+    <div class="composer-zone"><div class="attached-file hidden" id="attachedFile"></div><form class="composer glass" id="composer"><button class="icon-btn sparkle-btn" type="button" title="AI assistant"><i data-icon="sparkle"></i></button><textarea id="prompt" rows="1" placeholder="Ask anything to Orbit AI..." aria-label="Message Orbit AI"></textarea><div class="composer-actions"><button class="icon-btn attach-btn" type="button" id="attach" title="Attach a file"><i data-icon="paperclip"></i></button><button class="icon-btn mic-btn" type="button" id="mic" title="Use microphone"><i data-icon="mic"></i></button><button class="send-btn" type="submit" aria-label="Send message"><i data-icon="arrow"></i></button></div><input type="file" id="fileInput" hidden></form><div class="composer-foot"><span>Orbit can make mistakes. Verify important information.</span><span><kbd>↵</kbd> to send <i>·</i> <kbd>⇧ ↵</kbd> for new line</span></div></div>
+  </main>
+  <section class="settings-overlay" id="settingsOverlay" aria-hidden="true">
+    <div class="settings-backdrop" data-close-settings></div>
+    <aside class="settings-panel glass" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <header class="settings-header"><div><span class="settings-kicker">YOUR WORKSPACE</span><h2 id="settingsTitle">Settings</h2></div><button class="icon-btn" id="closeSettings" aria-label="Close settings"><i data-icon="close"></i></button></header>
+      <nav class="settings-tabs" aria-label="Settings sections"><button class="settings-tab active" data-settings-tab="personalization"><i data-icon="sparkle"></i> Personalization</button><button class="settings-tab" data-settings-tab="appearance"><i data-icon="sun"></i> Appearance</button></nav>
+      <div class="settings-content">
+        <section class="settings-page active" data-settings-page="personalization"><div class="settings-intro"><h3>Make Orbit yours</h3><p>Small choices that make your workspace feel right.</p></div>
+          <div class="setting-row"><div><b>Send with Enter</b><span>Use Shift + Enter for a new line</span></div><label class="switch"><input type="checkbox" id="enterToSend" checked><span></span></label></div>
+          <div class="setting-row"><div><b>Fluid motion</b><span>Keep the ambient background flowing</span></div><label class="switch"><input type="checkbox" id="fluidMotion" checked><span></span></label></div>
+          <div class="setting-row"><div><b>Conversation suggestions</b><span>Show quick prompts on the home screen</span></div><label class="switch"><input type="checkbox" id="showSuggestions" checked><span></span></label></div>
+          <div class="settings-tip"><i data-icon="sparkle"></i><span>Your preferences are saved on this device.</span></div>
+        </section>
+        <section class="settings-page" data-settings-page="appearance"><div class="settings-intro"><h3>Appearance</h3><p>Choose the colors that shape your fluid backdrop.</p></div>
+          <div class="palette-grid" id="paletteGrid">
+            <button class="palette-option selected" data-palette="aurora"><span class="palette-swatch aurora-swatch"><i></i><i></i><i></i></span><b>Aurora</b><small>Blue · mint</small></button>
+            <button class="palette-option" data-palette="emerald"><span class="palette-swatch emerald-swatch"><i></i><i></i><i></i></span><b>Emerald</b><small>Jade · teal</small></button>
+            <button class="palette-option" data-palette="violet"><span class="palette-swatch violet-swatch"><i></i><i></i><i></i></span><b>Cosmic</b><small>Violet · blue</small></button>
+            <button class="palette-option" data-palette="sunset"><span class="palette-swatch sunset-swatch"><i></i><i></i><i></i></span><b>Solar</b><small>Coral · gold</small></button>
+            <button class="palette-option" data-palette="rose"><span class="palette-swatch rose-swatch"><i></i><i></i><i></i></span><b>Rose</b><small>Pink · plum</small></button>
+            <button class="palette-option" data-palette="arctic"><span class="palette-swatch arctic-swatch"><i></i><i></i><i></i></span><b>Arctic</b><small>Ice · sky</small></button>
+            <button class="palette-option" data-palette="citrus"><span class="palette-swatch citrus-swatch"><i></i><i></i><i></i></span><b>Citrus</b><small>Lime · tangerine</small></button>
+            <button class="palette-option" data-palette="nebula"><span class="palette-swatch nebula-swatch"><i></i><i></i><i></i></span><b>Nebula</b><small>Indigo · magenta</small></button>
+          </div>
+          <div class="custom-color"><div><b>Custom fluid color</b><span>Personalize the main glow</span></div><label class="color-well"><input id="customColor" type="color" value="#48c9e8" aria-label="Choose custom fluid color"><i></i></label></div>
+          <div class="appearance-note"><span class="online-dot"></span> The fluid gradient keeps moving as your colors shift.</div>
+        </section>
+      </div>
+    </aside>
+  </section>
+  <div class="toast" id="toast"></div>
+  <section class="auth-overlay" id="authOverlay" aria-labelledby="authTitle">
+    <div class="auth-card glass">
+      <span class="brand-glyph auth-mark" aria-hidden="true">N</span>
+      <p class="auth-kicker">YOUR INTELLIGENCE, AMPLIFIED</p>
+      <h2 id="authTitle">Welcome to Orbit AI</h2>
+      <p class="auth-copy">Sign in to continue, or explore Orbit as a guest.</p>
+      <button class="auth-google" id="continueGoogle" type="button"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.91a11.1 11.1 0 0 1-4.78 7.28l7.73 6C44.37 38.12 47 31.9 47 24.55Z"/><path fill="#FBBC05" d="M10.53 28.59a14.4 14.4 0 0 1 0-9.18l-7.98-6.2a23.9 23.9 0 0 0 0 21.58l7.98-6.2Z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.7l-7.73-6c-2.15 1.45-4.9 2.3-8.17 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.2C6.51 42.62 14.62 48 24 48Z"/></svg>Continue with Google</button>
+      <button class="auth-guest" id="continueGuest" type="button">Continue as Guest</button>
+      <p class="auth-note" id="authNote">Your conversations stay on this device in guest mode.</p>
+    </div>
+  </section>
+  <script src="vendor/three.min.js"></script><script src="app-config.js"></script><script defer src="app.js"></script>
+</body></html>
