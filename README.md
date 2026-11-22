@@ -1,4 +1,4 @@
-# Orbit AI v4.3
+# Orbit AI v2.5
 
 A static, responsive AI interface with a custom Three.js holographic orb, shader-driven animated background, and browser-persisted conversation history.
 
